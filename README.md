@@ -51,6 +51,14 @@
 - [PyTorch3D][py3d]
 - [COCO][coco]
 
+### FAIR cluster
+
+If you are on a server with multiple versions of conda, gcc, cuda and cudnn, type the following first:
+
+``` bash
+module load anaconda3/2021.05 gcc/7.1.0 cuda/10.1 cudnn/v7.6.5.32-cuda.10.1
+```
+
 ``` bash
 # setup new evironment
 conda create -n cubercnn python=3.8
@@ -69,6 +77,32 @@ conda install -c conda-forge scipy seaborn
 ```
 
 For reference, we used `cuda/10.1` and `cudnn/v7.6.5.32` for our experiments. We expect that slight variations in versions are also compatible. 
+
+### MSU CVLab
+
+```bash
+source cuda_10.2_env
+conda create -n cubercnn6 python=3.8
+source activate cubercnn6
+conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cudatoolkit=10.2 -c pytorch -y
+conda install -c conda-forge ipython -y
+
+curl -LO https://github.com/NVIDIA/cub/archive/1.10.0.tar.gz
+tar xzf 1.10.0.tar.gz
+export CUB_HOME=$PWD/cub-1.10.0
+git clone https://github.com/facebookresearch/pytorch3d.git
+cd pytorch3d
+git checkout v0.7.0
+pip install -e .
+cd ..
+
+pip install cython opencv-python
+pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+python -m pip install detectron2 -f https://dl.fbaipublicfiles.com/detectron2/wheels/cu102/torch1.8/index.html
+pip install scipy pandas
+```
+
+### HPCC
 
 ## Demo <a name="demo"></a>
 
